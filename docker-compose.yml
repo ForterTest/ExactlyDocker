@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:1.17
+    ports:
+      - 80:80
+      - 88:88
+    volumes:
+      - ./exactly_test:/usr/share/nginx/html
+      - ./api_client:/usr/share/nginx/html2
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./logs:/var/log/nginx
+    depends_on:
+      - php
+      - db
+
+  php:
+    image: php_exactly
+    volumes:
+      - ./exactly_test:/usr/share/nginx/html
+      - ./api_client:/usr/share/nginx/html2
+    environment:
+      CONTAINER_ROLE: app
+
+  scheduler:
+    image: php_exactly
+    depends_on:
+      - php
+    volumes:
+      - ./exactly_test:/usr/share/nginx/html
+    environment:
+      CONTAINER_ROLE: scheduler
+
+  db:
+    image: postgres:9.4
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres-data:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_USER=exactly
+      - POSTGRES_PASSWORD=123456
