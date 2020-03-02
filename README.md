@@ -7,7 +7,9 @@ cd ExactlyDocker
 sudo ./run.sh
 ```
 
-After the script has finished the job, wait for a few seconds for containers to start, and feel free to connect to http://localhost (or http://127.0.0.1, if localhost is not in your hosts file) from your favorite browser.
+After the script has finished the job, wait for a few seconds for containers to start, and feel free to connect to:
+* http://127.0.0.1 - User page, where clients and tokens may be created.
+* http://127.0.0.1:88 - Sample service, which uses all the necessary API endpoints. Example user credentials: **lourdes44@example.org | password**
 
 To stop the environment, use this command in command line:
 ```
